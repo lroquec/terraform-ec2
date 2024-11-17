@@ -6,5 +6,5 @@ output "vpc_cidr" {
 output "first_public_subnet_id" {
   description = "The ID of the first public subnet"
   value       = module.vpc.public_subnets[0]
-  
+
 }
