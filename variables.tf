@@ -1,14 +1,14 @@
 variable "project_name" {
   description = "The name of the project"
   type        = string
-  
+
 }
 
 variable "vpc_cidr" {
   description = "The CIDR block for the VPC"
   type        = string
   default     = "10.0.0.0/16"
-  
+
   validation {
     condition     = can(cidrnetmask(var.vpc_config.cidr_block))
     error_message = "The VPC CIDR block is not a valid CIDR block"
