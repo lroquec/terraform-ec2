@@ -11,7 +11,7 @@ output "first_public_subnet_id" {
 
 output "ec2_instance_id_public_ip" {
   description = "The public IP address of the EC2 instance"
-  value       = aws_instance.ec2instance.public_ip
+  value       = aws_instance.web.public_ip
 
 
 }
