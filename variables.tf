@@ -39,3 +39,15 @@ variable "subnet_config" {
     error_message = "The cidr_block config option must contain a valid CIDR block."
   }
 }
+
+variable "instance_type" {
+  description = "The instance type to use for the EC2 instance"
+  type        = string
+  default     = "t2.micro"
+
+  validation {
+    condition     = var.instance_type == "t2.micro"
+    error_message = "The instance type must be a t2.micro for staying within the free tier"
+  }
+
+}
