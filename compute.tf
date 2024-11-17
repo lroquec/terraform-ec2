@@ -17,7 +17,7 @@ resource "aws_instance" "web" {
   ami                  = data.aws_ami.latest_amazon_linux.id
   instance_type        = var.instance_type
   subnet_id            = module.vpc.public_subnets[0]
-  security_groups      = [aws_security_group.allow_all.id]
+  security_groups      = [aws_security_group.allow_http_inbound.id]
   iam_instance_profile = aws_iam_instance_profile.ec2instanceprofile.name
   user_data            = <<-EOF
               #!/bin/bash
