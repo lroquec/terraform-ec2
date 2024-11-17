@@ -10,7 +10,7 @@ variable "vpc_cidr" {
   default     = "10.0.0.0/16"
 
   validation {
-    condition     = can(cidrnetmask(var.vpc_cidr.cidr_block))
+    condition     = can(cidrnetmask(var.vpc_cidr))
     error_message = "The VPC CIDR block is not a valid CIDR block"
   }
 }
