@@ -21,10 +21,31 @@ resource "aws_instance" "web" {
   iam_instance_profile = aws_iam_instance_profile.ec2instanceprofile.name
   user_data            = <<-EOF
               #!/bin/bash
-              yum install -y httpd
-              systemctl start httpd
-              systemctl enable httpd
+              yum update -y
+              yum install wget ruby httpd docker -y
+              echo "LoadModule proxy_module modules/mod_proxy.so" >> /etc/httpd/conf/httpd.conf
+              echo "LoadModule proxy_http_module modules/mod_proxy_http.so" >> /etc/httpd/conf/httpd.conf
               echo "<h1>Deployed via Terraform</h1><br>Hostname: $(hostname)<br>Private IP: $(hostname -I | awk '{print $1}')" > /var/www/html/index.html
+              cat <<EOT > /etc/httpd/conf.d/reverse-proxy.conf
+              <VirtualHost *:80>
+                  ServerAlias *
+                  ProxyPreserveHost On
+                  ProxyPass / http://localhost:5000/
+                  ProxyPassReverse / http://localhost:5000/
+                  RequestHeader set X-Forwarded-Proto "http"
+                  RequestHeader set X-Forwarded-Port "80"
+                  ErrorLog /var/log/httpd/error.log
+                  CustomLog /var/log/httpd/access.log combined
+              </VirtualHost>
+              EOT
+              systemctl enable httpd --now
+              systemctl enable docker --now
+              usermod -aG docker ec2-user
+              cd /home/ec2-user 
+              wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install 
+              chmod +x ./install
+              ./install auto
+              systemctl enable codedeploy-agent --now
               EOF
 
   lifecycle {
