@@ -39,7 +39,7 @@ Este repositorio contiene configuraciones de Terraform para aprovisionar recurso
    terraform init
    ```
 3. **Revisar y Actualizar Variables**
-   Edita el archivo terraform.tfvars para establecer tus configuraciones personalizadas
+   - Edita el archivo terraform.tfvars para establecer tus configuraciones personalizadas
 4. **Planificar el Despliegue**
       ```bash
    terraform plan
