@@ -30,12 +30,12 @@ resource "aws_instance" "web" {
               <VirtualHost *:80>
                   ServerAlias *
                   ProxyPreserveHost On
-                  ProxyPass / http://localhost:5000/
-                  ProxyPassReverse / http://localhost:5000/
+                  ProxyPass /docker http://localhost:5000/
+                  ProxyPassReverse /docker http://localhost:5000/
                   RequestHeader set X-Forwarded-Proto "http"
                   RequestHeader set X-Forwarded-Port "80"
-                  ErrorLog /var/log/httpd/error.log
-                  CustomLog /var/log/httpd/access.log combined
+                  ErrorLog /var/log/httpd/docker_error.log
+                  CustomLog /var/log/httpd/docker_access.log combined
               </VirtualHost>
               EOT
               systemctl enable httpd --now
