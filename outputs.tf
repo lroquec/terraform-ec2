@@ -8,3 +8,10 @@ output "first_public_subnet_id" {
   value       = module.vpc.public_subnets[0]
 
 }
+
+output "ec2_instance_id_public_ip" {
+  description = "The public IP address of the EC2 instance"
+  value       = aws_instance.ec2instance.public_ip
+
+  
+}
