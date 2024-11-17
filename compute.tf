@@ -4,8 +4,9 @@ data "aws_ami" "latest_amazon_linux" {
 
   filter {
     name   = "name"
-    values = ["Amazon Linux"] # Filter for Amazon Linux 2 AMIs
+    values = ["al2023-ami-2023.*-x86_64"]
   }
+
   filter {
     name   = "architecture"
     values = ["x86_64"] # Filter for 64-bit architecture
